@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_slotmaschine_terminal" default="compile.module.slotmaschine_terminal">
+  <dirname property="module.slotmaschine_terminal.basedir" file="${ant.file.module_slotmaschine_terminal}"/>
+  
+  <property name="module.jdk.home.slotmaschine_terminal" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.slotmaschine_terminal" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.slotmaschine_terminal" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.slotmaschine_terminal" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="slotmaschine_terminal.output.dir" value="${module.slotmaschine_terminal.basedir}/out/production/Slotmaschine_Terminal"/>
+  <property name="slotmaschine_terminal.testoutput.dir" value="${module.slotmaschine_terminal.basedir}/out/test/Slotmaschine_Terminal"/>
+  
+  <path id="slotmaschine_terminal.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="slotmaschine_terminal.module.production.classpath">
+    <path refid="${module.jdk.classpath.slotmaschine_terminal}"/>
+  </path>
+  
+  <path id="slotmaschine_terminal.runtime.production.module.classpath">
+    <pathelement location="${slotmaschine_terminal.output.dir}"/>
+  </path>
+  
+  <path id="slotmaschine_terminal.module.classpath">
+    <path refid="${module.jdk.classpath.slotmaschine_terminal}"/>
+    <pathelement location="${slotmaschine_terminal.output.dir}"/>
+  </path>
+  
+  <path id="slotmaschine_terminal.runtime.module.classpath">
+    <pathelement location="${slotmaschine_terminal.testoutput.dir}"/>
+    <pathelement location="${slotmaschine_terminal.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.slotmaschine_terminal">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.slotmaschine_terminal">
+    <patternset refid="excluded.from.module.slotmaschine_terminal"/>
+  </patternset>
+  
+  <path id="slotmaschine_terminal.module.sourcepath">
+    <dirset dir="${module.slotmaschine_terminal.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.slotmaschine_terminal" depends="compile.module.slotmaschine_terminal.production,compile.module.slotmaschine_terminal.tests" description="Compile module Slotmaschine_Terminal"/>
+  
+  <target name="compile.module.slotmaschine_terminal.production" depends="register.custom.compilers" description="Compile module Slotmaschine_Terminal; production classes">
+    <mkdir dir="${slotmaschine_terminal.output.dir}"/>
+    <javac2 destdir="${slotmaschine_terminal.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.slotmaschine_terminal}/javac">
+      <compilerarg line="${compiler.args.slotmaschine_terminal}"/>
+      <bootclasspath refid="slotmaschine_terminal.module.bootclasspath"/>
+      <classpath refid="slotmaschine_terminal.module.production.classpath"/>
+      <src refid="slotmaschine_terminal.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.slotmaschine_terminal"/>
+    </javac2>
+    
+    <copy todir="${slotmaschine_terminal.output.dir}">
+      <fileset dir="${module.slotmaschine_terminal.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.slotmaschine_terminal.tests" depends="register.custom.compilers,compile.module.slotmaschine_terminal.production" description="compile module Slotmaschine_Terminal; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.slotmaschine_terminal" description="cleanup module">
+    <delete dir="${slotmaschine_terminal.output.dir}"/>
+    <delete dir="${slotmaschine_terminal.testoutput.dir}"/>
+  </target>
+</project>
